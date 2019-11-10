@@ -148,7 +148,7 @@ wfLoadExtension( 'CiteThisPage' );
 wfLoadExtension( 'CSS' );
 
 ## Loops
-wfLoadExtension( 'Loops' );
+require_once( "$IP/extensions/Loops/Loops.php" );
 
 ## MultimediaViewer
 wfLoadExtension( 'MultimediaViewer' );
