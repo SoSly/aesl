@@ -147,6 +147,9 @@ wfLoadExtension( 'CiteThisPage' );
 ## CSS
 wfLoadExtension( 'CSS' );
 
+## Loops
+wfLoadExtension( 'Loops' );
+
 ## MultimediaViewer
 wfLoadExtension( 'MultimediaViewer' );
 
@@ -182,3 +185,6 @@ $wgTitleBlacklistSources = array(
          'src'  => 'https://meta.wikimedia.org/w/index.php?title=Title_blacklist&action=raw',
     ),
 );
+
+## Variables
+wfLoadExtension( 'Variables' );
