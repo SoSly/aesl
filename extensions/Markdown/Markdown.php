@@ -77,6 +77,10 @@ class MarkdownExtension
     {
         global $wgMarkdownDefaultOn;
 
+        if (!(empty( $parser->mStripState->general->data[$text] ))) {
+            $text = $parser->mStripState->general->data[$text];
+        }
+
         if (static::shouldParseText($text))
         {
             if (!$wgMarkdownDefaultOn)
@@ -111,6 +115,9 @@ class MarkdownExtension
         global $wgMarkdownWikiLinks;
 
         $html = $text;
+        if (!(empty( $parser->mStripState->general->data[$html] ))) {
+            $html = $parser->mStripState->general->data[$html];
+        }
 
         // Post-Markdown wiki parsing
         $html = $parser->replaceVariables($html);
