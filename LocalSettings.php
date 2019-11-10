@@ -94,14 +94,14 @@ $wgShellLocale = "C.UTF-8";
 # Site language code, should be one of the list in ./languages/data/Names.php
 $wgLanguageCode = "en";
 
-$wgSecretKey = "3ec8d7858cee643ce77448c2d434bfd606a6cf99d5f84cf1bbce90fcdebcbc5f";
+$wgSecretKey = getenv("SECRET_KEY");
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "189a5d1e2d94abf4";
+$wgUpgradeKey = getenv("UPGRADE_KEY");
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
@@ -132,6 +132,18 @@ $wgVectorResponsive = false;
 #######################################
 ## Extensions
 #######################################
+
+## AWS
+wfLoadExtension( 'AWS' );
+
+$wgAWSCredentials = [
+     "key" => getenv("AWS_ACCESS_KEY"),
+     "secret" => getenv("AWS_SECRET_KEY"),
+     "token" => false
+];
+
+$wgAWSRegion = "us-west-1";
+$wgAWSBucketName = "sosly.aesl";
 
 ## CategoryTree
 wfLoadExtension( 'CategoryTree' );
