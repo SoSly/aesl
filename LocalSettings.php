@@ -142,8 +142,31 @@ $wgAWSCredentials = [
      "token" => false
 ];
 
-$wgAWSRegion = "us-east-1";
+$wgAWSRegion = "us-west-1";
 $wgAWSBucketName = "sosly.aesl";
+
+$wgFileBackends['s3']['containerPaths'] = array(
+     'wiki_id-local-public' => 'sosly.aesl',
+     'wiki_id-local-thumb' => 'sosly.aesl',
+     'wiki_id-local-deleted' => 'sosly.aesl',
+     'wiki_id-local-temp' => 'sosly.aesl'
+ );
+ 
+// Make MediaWiki use Amazon S3 for file storage.
+$wgLocalFileRepo = array (
+     'class'             => 'LocalRepo',
+     'name'              => 'local',
+     'backend'           => 'AmazonS3',
+     'scriptDirUrl'      => $wgScriptPath,
+     'scriptExtension'   => $wgScriptExtension,
+     'url'               => $wgScriptPath . '/img_auth.php',
+     'zones'             => array(
+         'public'  => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/public' ),
+         'thumb'   => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/thumb' ),
+         'temp'    => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/temp' ),
+         'deleted' => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/deleted' )
+     )
+ );
 
 ## CategoryTree
 wfLoadExtension( 'CategoryTree' );
