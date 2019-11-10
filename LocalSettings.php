@@ -144,6 +144,9 @@ $wgCiteStoreReferencesData = true;
 ## CiteThisPage
 wfLoadExtension( 'CiteThisPage' );
 
+## CSS
+wfLoadExtension( 'CSS' );
+
 ## MultimediaViewer
 wfLoadExtension( 'MultimediaViewer' );
 
