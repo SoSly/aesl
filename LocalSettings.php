@@ -142,7 +142,7 @@ $wgAWSCredentials = [
      "token" => false
 ];
 
-$wgAWSRegion = "us-west-1";
+$wgAWSRegion = "us-east-1";
 $wgAWSBucketName = "sosly.aesl";
 
 ## CategoryTree
