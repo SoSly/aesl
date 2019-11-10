@@ -73,7 +73,7 @@ class MarkdownExtension
      * @param Parser $parser MediaWiki's parser
      * @param string $text   The text to parse
      */
-    public static function onParserBeforeInternalParse($parser, &$text)
+    public static function onParserBeforeInternalParse($parser, &$text, &$strip_state)
     {
         global $wgMarkdownDefaultOn;
 
@@ -84,7 +84,7 @@ class MarkdownExtension
                 $text = substr($text, strlen(static::getSearchString()));
             }
 
-            $text = static::parseMarkdown($parser, $text);
+            $text = static::parseMarkdown($parser, $text, $strip_state);
 
             return false;
         }
@@ -102,20 +102,24 @@ class MarkdownExtension
     /**
      * Converts the given text into markdown.
      *
-     * @param  Parser $parser MediaWiki's parser
-     * @param  string $text   The text to parse
-     * @return string         The parsed text
+     * @param  Parser       $parser         MediaWiki's parser
+     * @param  string       $text           The text to parse
+     * @param  StripState   $strip_state    The current Strip State
+     * @return string       The parsed text
      */
-    protected static function parseMarkdown($parser, $text)
+    protected static function parseMarkdown($parser, $text, $strip_state)
     {
         global $wgMarkdownWikiLinks;
+
+        $html = $text;
 
         // Post-Markdown wiki parsing
         $html = $parser->replaceVariables($html);
         $html = $parser->doDoubleUnderscore($html);
 
-        // Parse Markdown
-        $html = static::getParser()->text($html);
+        // Remove parser stripping
+        $html = $strip_state->unstripBoth($html);
+        $html = $strip_state->killMarkers($html);
 
         // Attempt to use Wiki-style links if turned on
         if ($wgMarkdownWikiLinks)
@@ -132,9 +136,13 @@ class MarkdownExtension
             $parser->replaceLinkHolders($html);
         }
 
+        // Parse markdown
+        $html = static::getParser()->text($html);
+
         // Post-Markdown wiki parsing
         $html = $parser->formatHeadings($html, $text);
         $html = $parser->doMagicLinks($html);
+        $html = str_replace( Parser::MARKER_PREFIX . 'NOPARSE', '', $html );
 
         return $html;
     }
