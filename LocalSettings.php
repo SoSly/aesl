@@ -150,6 +150,10 @@ wfLoadExtension( 'CSS' );
 ## Loops
 require_once( "$IP/extensions/Loops/Loops.php" );
 
+## Markdown
+require_once("$IP/extensions/Markdown/Markdown.php");
+$wgMarkdownExtra = true;
+
 ## MultimediaViewer
 wfLoadExtension( 'MultimediaViewer' );
 
