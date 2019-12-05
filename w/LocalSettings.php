@@ -145,39 +145,39 @@ $egApprovedRevsShowNotApprovedMessage = true;
 $egApprovedRevsSelfOwnedNamespaces = array( NS_USER );
 
 ## AWS
-wfLoadExtension( 'AWS' );
+// wfLoadExtension( 'AWS' );
 
-$wgAWSCredentials = [
-     "key" => getenv("AWS_ACCESS_KEY"),
-     "secret" => getenv("AWS_SECRET_KEY"),
-     "token" => false
-];
+// $wgAWSCredentials = [
+//      "key" => getenv("AWS_ACCESS_KEY"),
+//      "secret" => getenv("AWS_SECRET_KEY"),
+//      "token" => false
+// ];
 
-$wgAWSRegion = "us-west-1";
-$wgAWSBucketName = "sosly.aesl";
+// $wgAWSRegion = "us-west-1";
+// $wgAWSBucketName = "sosly.aesl";
 
-$wgFileBackends['s3']['containerPaths'] = array(
-     'wiki_id-local-public' => 'sosly.aesl',
-     'wiki_id-local-thumb' => 'sosly.aesl',
-     'wiki_id-local-deleted' => 'sosly.aesl',
-     'wiki_id-local-temp' => 'sosly.aesl'
- );
+// $wgFileBackends['s3']['containerPaths'] = array(
+//      'wiki_id-local-public' => 'sosly.aesl',
+//      'wiki_id-local-thumb' => 'sosly.aesl',
+//      'wiki_id-local-deleted' => 'sosly.aesl',
+//      'wiki_id-local-temp' => 'sosly.aesl'
+//  );
  
-// Make MediaWiki use Amazon S3 for file storage.
-$wgLocalFileRepo = array (
-     'class'             => 'LocalRepo',
-     'name'              => 'local',
-     'backend'           => 'AmazonS3',
-     'scriptDirUrl'      => $wgScriptPath,
-     'scriptExtension'   => $wgScriptExtension,
-     'url'               => "https://d2yajlc7qnqmrh.cloudfront.net/",
-     'zones'             => array(
-         'public'  => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/public' ),
-         'thumb'   => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/thumb' ),
-         'temp'    => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/temp' ),
-         'deleted' => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/deleted' )
-     )
- );
+// // Make MediaWiki use Amazon S3 for file storage.
+// $wgLocalFileRepo = array (
+//      'class'             => 'LocalRepo',
+//      'name'              => 'local',
+//      'backend'           => 'AmazonS3',
+//      'scriptDirUrl'      => $wgScriptPath,
+//      'scriptExtension'   => $wgScriptExtension,
+//      'url'               => $wgScriptPath . '/img_auth.php',
+//      'zones'             => array(
+//          'public'  => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/public' ),
+//          'thumb'   => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/thumb' ),
+//          'temp'    => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/temp' ),
+//          'deleted' => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/deleted' )
+//      )
+//  );
 
 ## CategoryTree
 wfLoadExtension( 'CategoryTree' );
@@ -192,6 +192,42 @@ wfLoadExtension( 'CiteThisPage' );
 
 ## CSS
 wfLoadExtension( 'CSS' );
+
+## LocalS3Repo2
+// s3 filesystem repo
+$wgUploadDirectory = '';
+$wgUploadS3Bucket = 'sosly.aesl';
+$wgUploadS3SSL = true; // true if SSL should be used
+$wgPublicS3 = true; // true if public, false if authentication should be used
+
+$wgS3BaseUrl = "http".($wgUploadS3SSL?"s":"")."://s3.amazonaws.com/$wgUploadS3Bucket";
+
+//viewing needs a different url from uploading. Uploading doesnt work on the below url and viewing doesnt work on the above one.
+$wgS3BaseUrlView = "http".($wgUploadS3SSL?"s":"")."://".$wgUploadS3Bucket.".s3.amazonaws.com";
+$wgUploadBaseUrl = "$wgS3BaseUrlView/$wgUploadDirectory";
+
+// leave $wgCloudFrontUrl blank to not render images from CloudFront
+$wgCloudFrontUrl = 'https://d2yajlc7qnqmrh.cloudfront.net/';
+$wgLocalFileRepo = array(
+        'class' => 'LocalS3Repo',
+        'name' => 's3',
+        'directory' => $wgUploadDirectory,
+        'url' => $wgUploadBaseUrl ? $wgUploadBaseUrl . $wgUploadPath : $wgUploadPath,
+        'urlbase' => $wgS3BaseUrl ? $wgS3BaseUrl : "",
+        'hashLevels' => $wgHashedUploadDirectory ? 2 : 0,
+        'thumbScriptUrl' => $wgThumbnailScriptPath,
+        'transformVia404' => !$wgGenerateThumbnailOnParse,
+        'initialCapital' => $wgCapitalLinks,
+        'deletedDir' => $wgUploadDirectory.'/deleted',
+        'deletedHashLevels' => $wgFileStore['deleted']['hash'],
+        'AWS_ACCESS_KEY' => getenv("AWS_ACCESS_KEY"),
+        'AWS_SECRET_KEY' => getenv("AWS_SECRET_KEY"),
+        'AWS_S3_BUCKET' => $wgUploadS3Bucket,
+        'AWS_S3_PUBLIC' => $wgPublicS3,
+        'AWS_S3_SSL' => $wgUploadS3SSL,
+        'cloudFrontUrl' => $wgCloudFrontUrl,
+);
+require_once("$IP/extensions/LocalS3Repo2/LocalS3Repo.php");
 
 ## Loops
 require_once( "$IP/extensions/Loops/Loops.php" );
