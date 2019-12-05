@@ -200,7 +200,7 @@ require_once( "$IP/extensions/Loops/Loops.php" );
 require_once("$IP/extensions/Markdown/Markdown.php");
 
 ## MultimediaViewer
-wfLoadExtension( 'MultimediaViewer' );
+// wfLoadExtension( 'MultimediaViewer' );
 
 ## ParserFunctions
 wfLoadExtension( 'ParserFunctions' );
