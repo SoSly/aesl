@@ -1,7 +1,7 @@
-CREATE TABLE /*_*/approved_revs_files (
-	file_title varbinary(255) NOT NULL,
-	approved_timestamp binary(14) NOT NULL,
-	approved_sha1 varbinary(32) NOT NULL
+CREATE TABLE /*_*/mediawiki.approved_revs_files (
+	file_title bit varying(2040) NOT NULL,
+	approved_timestamp bit(112) NOT NULL,
+	approved_sha1 bit varying(256) NOT NULL
 ) /*$wgDBTableOptions*/;
 
-CREATE UNIQUE INDEX approved_revs_file_title ON /*_*/approved_revs_files (file_title);
+CREATE UNIQUE INDEX approved_revs_file_title ON /*_*/mediawiki.approved_revs_files (file_title);
