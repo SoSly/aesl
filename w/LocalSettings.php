@@ -136,6 +136,15 @@ $wgVectorResponsive = false;
 ## Extensions
 #######################################
 
+## ApprovedRevs
+wfLoadExtension( 'ApprovedRevs' );
+
+$egApprovedRevsAutomaticApprovals = false;
+$egApprovedRevsShowNotApprovedMessage = true;
+
+$egApprovedRevsSelfOwnedNamespaces = array( NS_USER );
+
+
 ## AWS
 wfLoadExtension( 'AWS' );
 
