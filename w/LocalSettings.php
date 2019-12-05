@@ -170,7 +170,7 @@ $wgLocalFileRepo = array (
      'backend'           => 'AmazonS3',
      'scriptDirUrl'      => $wgScriptPath,
      'scriptExtension'   => $wgScriptExtension,
-     'url'               => $wgScriptPath . '/img_auth.php',
+     'url'               => "https://d2yajlc7qnqmrh.cloudfront.net/",
      'zones'             => array(
          'public'  => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/public' ),
          'thumb'   => array( 'url' => 'http://sosly.aesl.s3-eu-west-1.amazonaws.com/thumb' ),
