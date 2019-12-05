@@ -227,7 +227,7 @@ $wgLocalFileRepo = array(
         'AWS_S3_SSL' => $wgUploadS3SSL,
         'cloudFrontUrl' => $wgCloudFrontUrl,
 );
-require_once("$IP/extensions/LocalS3Repo2/LocalS3Repo.php");
+require_once("$IP/extensions/LocalS3Repo/LocalS3Repo.php");
 
 ## Loops
 require_once( "$IP/extensions/Loops/Loops.php" );
