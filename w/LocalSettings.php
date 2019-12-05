@@ -154,7 +154,7 @@ $wgAWSCredentials = [
 ];
 
 $wgAWSRegion = "us-west-1";
-$wgAWSBucketName = "sosly.aesl";
+$wgAWSBucketName = "d2yajlc7qnqmrh";
 $wgAWSBucketDomain = '$1.cloudfront.net';
 
 $wgFileBackends['s3']['containerPaths'] = array(
