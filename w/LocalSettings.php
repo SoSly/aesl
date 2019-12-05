@@ -144,7 +144,6 @@ $egApprovedRevsShowNotApprovedMessage = true;
 
 $egApprovedRevsSelfOwnedNamespaces = array( NS_USER );
 
-
 ## AWS
 wfLoadExtension( 'AWS' );
 
@@ -238,3 +237,10 @@ $wgTitleBlacklistSources = array(
 
 ## Variables
 wfLoadExtension( 'Variables' );
+
+#######################################
+## Exceptions
+#######################################
+$wgShowExceptionDetails = true;
+$wgShowDBErrorBacktrace = true;
+$wgShowSQLErrors = true;
