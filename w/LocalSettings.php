@@ -207,6 +207,26 @@ $wgCiteStoreReferencesData = true;
 ## CiteThisPage
 wfLoadExtension( 'CiteThisPage' );
 
+## ConfirmEdit
+wfLoadExtensions([ 'ConfirmEdit', 'ConfirmEdit/ReCaptchaNoCaptcha' ]);
+$wgCaptchaClass = 'ReCaptchaNoCaptcha';
+$wgReCaptchaSiteKey = 'your public/site key here';
+$wgReCaptchaSecretKey = 'your private key here';
+
+$wgMainCacheType    = CACHE_ANYTHING;
+$wgCaptchaTriggers['edit']          = true;
+$wgCaptchaTriggers['create']        = true;
+$wgCaptchaTriggers['createtalk']    = true;
+$wgCaptchaTriggers['addurl']        = true;
+$wgCaptchaTriggers['badlogin']      = true;
+$wgGroupPermissions['*'            ]['skipcaptcha'] = false;
+$wgGroupPermissions['user'         ]['skipcaptcha'] = false;
+$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
+$wgGroupPermissions['bot'          ]['skipcaptcha'] = true;
+$wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
+$wgGroupPermissions['emailconfirmed']['skipcaptcha'] = true;
+$ceAllowConfirmedEmail = true;
+
 ## CSS
 wfLoadExtension( 'CSS' );
 
