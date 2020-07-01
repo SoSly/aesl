@@ -194,6 +194,11 @@ $wgLocalFileRepo = array (
 ## CategoryTree
 wfLoadExtension( 'CategoryTree' );
 
+## CheckUser
+wfLoadExtension( 'CheckUser' );
+$wgGroupPermissions['sysop']['checkuser'] = true;
+$wgGroupPermissions['sysop']['checkuser-log'] = true;
+
 ## Cite
 wfLoadExtension( 'Cite' );
 $wgCiteCacheRawReferencesOnParse = true;
